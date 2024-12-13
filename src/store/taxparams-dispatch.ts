@@ -1,0 +1,68 @@
+import { UnknownAction } from '@reduxjs/toolkit';
+import { TTaxParamValues } from 'models/TTaxParam';
+
+import {
+  setCurrentTaxformAdvertising,
+  setCurrentTaxformBankAccounts,
+  setCurrentTaxformBusinessRegistration,
+  setCurrentTaxformCallCenter,
+  setCurrentTaxformConsultingServices,
+  setCurrentTaxformCopyrightPatents,
+  setCurrentTaxformDisplayRoom,
+  setCurrentTaxformEmployeeLeasing,
+  setCurrentTaxformEmployeeTravel,
+  setCurrentTaxformEquipment,
+  setCurrentTaxformFranchising,
+  setCurrentTaxformGoodsConsignment,
+  setCurrentTaxformIndependentContractor,
+  setCurrentTaxformLoans,
+  setCurrentTaxformManagementServices,
+  setCurrentTaxformManufactureEquipment,
+  setCurrentTaxformMeetingPlace,
+  setCurrentTaxformMobileStore,
+  setCurrentTaxformOwnershipInterest,
+  setCurrentTaxformPartsDepartment,
+  setCurrentTaxformPayroll,
+  setCurrentTaxformPlaceOfBusiness,
+  setCurrentTaxformRepairShop,
+  setCurrentTaxformRetailPropertyFixtures,
+  setCurrentTaxformSales,
+  setCurrentTaxformThirdPartyService,
+  setCurrentTaxformTransportation,
+  setCurrentTaxformWarehouseProducts,
+} from './slices/current-taxform/current-taxform.slice';
+
+type TaxParamsDispatchEventType = (payload: TTaxParamValues) => UnknownAction;
+
+export const TaxParamsDispatchEvents: {
+  [key: string]: TaxParamsDispatchEventType;
+} = {
+  salesForm: setCurrentTaxformSales,
+  payrollForm: setCurrentTaxformPayroll,
+  equipmentValueForm: setCurrentTaxformEquipment,
+  advertisingForm: setCurrentTaxformAdvertising,
+  transportationForm: setCurrentTaxformTransportation,
+  franchisingForm: setCurrentTaxformFranchising,
+  thirdPartyServicesForm: setCurrentTaxformThirdPartyService,
+  employeeTravelForm: setCurrentTaxformEmployeeTravel,
+  businessRegistrationForm: setCurrentTaxformBusinessRegistration,
+  ownershipInterestForm: setCurrentTaxformOwnershipInterest,
+  independentContractorForm: setCurrentTaxformIndependentContractor,
+  bankAccountsForm: setCurrentTaxformBankAccounts,
+  loansForm: setCurrentTaxformLoans,
+  copyrightPatentsIntangiblesForm: setCurrentTaxformCopyrightPatents,
+  callCenterForm: setCurrentTaxformCallCenter,
+  manufactureEquipmentForm: setCurrentTaxformManufactureEquipment,
+  meetingPlacesForm: setCurrentTaxformMeetingPlace,
+  mobileStoreForm: setCurrentTaxformMobileStore,
+  officePlaceBusinessForm: setCurrentTaxformPlaceOfBusiness,
+  partsDepartmentForm: setCurrentTaxformPartsDepartment,
+  retailPropertyFixturesForm: setCurrentTaxformRetailPropertyFixtures,
+  repairShopForm: setCurrentTaxformRepairShop,
+  sampleDisplayRoomForm: setCurrentTaxformDisplayRoom,
+  goodsConsignmentForm: setCurrentTaxformGoodsConsignment,
+  warehouseProductsForm: setCurrentTaxformWarehouseProducts,
+  consultingServicesForm: setCurrentTaxformConsultingServices,
+  employeeLeasingPersonnelServicesForm: setCurrentTaxformEmployeeLeasing,
+  managementServicesForm: setCurrentTaxformManagementServices,
+};
