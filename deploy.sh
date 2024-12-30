@@ -40,4 +40,4 @@ sudo npm install
 
 # Run the desired npm script (e.g., start the app)
 sudo npm run build
-sudo npm run dev
+sudo nohup npm run dev &
