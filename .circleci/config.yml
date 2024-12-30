@@ -1,44 +1,38 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.github/workflows,deps:node:.
 version: 2.1
-orbs:
-  node: circleci/node@5
+
+executors:
+  node-executor:
+    machine:
+      enabled: true  # Use CircleCI's default VM, no Docker
+
 jobs:
-  build-node:
-    # Build node project
-    executor: node/default
+  install_dependencies:
+    executor: node-executor
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
       - run:
-          command: npm run build
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      # Copy output to artifacts dir
-      - run:
-          name: Copy artifacts
-          command: cp -R build dist public .output .next .docusaurus ~/artifacts 2>/dev/null || true
-      - store_artifacts:
-          path: ~/artifacts
-          destination: node-build
+          name: Install dependencies
+          command: |
+            curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo -E bash -
+            sudo yum install -y nodejs
+            npm install
+
   deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
+    executor: node-executor
     steps:
-      # Replace this with steps to deploy to users
+      - checkout
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-      - run:
-          name: found github actions config
-          command: ':'
+          name: SSH into EC2 and deploy
+          command: |
+            echo "$EC2_PRIVATE_KEY" > private_key.pem
+            chmod 600 private_key.pem
+            ssh -i private_key.pem ec2-user@$EC2_PUBLIC_IP 'bash -s' < ./deploy.sh
+
 workflows:
-  build:
+  version: 2
+  deploy:
     jobs:
-      - build-node
-    # - deploy:
-    #     requires:
-    #       - build-node
+      - install_dependencies
+      - deploy:
+          requires:
+            - install_dependencies
