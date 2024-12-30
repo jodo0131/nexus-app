@@ -12,7 +12,7 @@ fi
 sudo mkdir /app
 
 # Navigate to your project directory (adjust this path if necessary)
-sudo cd /app
+cd /app
 
 # Pull the latest code (optional, depending on your strategy)
 sudo git pull origin main
