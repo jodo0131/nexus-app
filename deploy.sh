@@ -28,8 +28,8 @@ fi
 cd $REPO_DIR/nexus-app
 
 # stop running npm
-pkill -f 'npm'
-ps aux | grep '[n]ode' | awk '{print $2}' | xargs kill -9
+sudo pkill -f 'npm'
+#ps aux | grep '[n]ode' | awk '{print $2}' | xargs kill -9
 
 # Install dependencies and deploy (for example, run npm install or npm run deploy)
 echo "Installing dependencies and deploying..."
