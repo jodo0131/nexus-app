@@ -3,7 +3,7 @@
 if nginx -v > /dev/null 2>&1; then
   sudo apt install -y nginx
 else
-  echo "nginx is already installed."
+  echo "nginx is already installed.."
 fi
 
 NGINX_CONF_PATH="/etc/nginx/sites-available/nexus-app"
