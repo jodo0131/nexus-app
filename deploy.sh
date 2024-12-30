@@ -18,9 +18,9 @@ REPO_DIR="/app"
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo "Git repository not found. Cloning..."
   cd $REPO_DIR
-  git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/nexus-app.git
+  sudo git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/nexus-app.git
 else
   echo "Git repository found. Pulling latest changes..."
   cd $REPO_DIR
-  git pull origin main
+  sudo git pull origin main
 fi
