@@ -12,11 +12,11 @@ fi
 sudo mkdir /app
 
 # Set the directory where you want to clone your repository
-REPO_DIR="/app"
+REPO_DIR="/app/nexus-app"
 
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo "Git repository not found. Cloning..."
-  cd $REPO_DIR
+  cd /app
   sudo git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/nexus-app.git
 else
   echo "Git repository found. Pulling latest changes..."
