@@ -16,6 +16,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP <<EOF
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt install -y nodejs
+            EOF
 
   deploy:
     executor: node-executor
