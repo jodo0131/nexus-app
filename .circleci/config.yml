@@ -19,7 +19,7 @@ jobs:
             echo "$EC2_PRIVATE_KEY" > nexus-app.pem
             chmod 600 nexus-app.pem
             cat nexus-app.pem
-            ssh -o StrictHostKeyChecking=no -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP "bash -c '
+            ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP "bash -c '
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt install -y nodejs'
             "
