@@ -13,9 +13,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP <<EOF
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt install -y nodejs
-            npm install
 
   deploy:
     executor: node-executor
@@ -39,4 +39,4 @@ workflows:
     filters:
       branches:
         only:
-          - main  # This ensures that the pipeline only runs on the main branch
+          - main  # This ensures the pipeline only runs on the `main` branch
