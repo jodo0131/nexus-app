@@ -11,12 +11,24 @@ fi
 #create folder
 sudo mkdir /app
 
-# Navigate to your project directory (adjust this path if necessary)
-cd /app
+# Set the directory where you want to clone your repository
+REPO_DIR="/app"
 
-# Pull the latest code (optional, depending on your strategy)
-sudo git pull origin main
+# Check if the directory exists. If not, clone the repository
+if [ ! -d "$REPO_DIR/.git" ]; then
+  echo "Git repository not found. Cloning..."
+  ggit clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/your-repo.git $REPO_DIR
+else
+  echo "Git repository found. Pulling latest changes..."
+  cd $REPO_DIR
+  git pull origin main
+fi
 
+# Navigate to the project directory (if needed)
+cd $REPO_DIR
+
+# Install dependencies and deploy (for example, run npm install or npm run deploy)
+echo "Installing dependencies and deploying..."
 # Install project dependencies
 sudo npm install
 
