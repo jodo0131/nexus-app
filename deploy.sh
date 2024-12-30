@@ -23,15 +23,3 @@ else
   cd $REPO_DIR
   git pull origin main
 fi
-
-# Navigate to the project directory (if needed)
-cd $REPO_DIR
-
-# Install dependencies and deploy (for example, run npm install or npm run deploy)
-echo "Installing dependencies and deploying..."
-# Install project dependencies
-sudo npm install
-
-# Run the desired npm script (e.g., start the app)
-sudo npm run build
-sudo npm run dev
