@@ -4,6 +4,7 @@ executors:
   node-executor:
     machine:
       enabled: true  # Use CircleCI's default VM, no Docker
+    working_directory: ~/repo  # Specify your working directory
 
 jobs:
   install_dependencies:
@@ -13,10 +14,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP <<EOF
+            echo "Installing dependencies on EC2 instance..."
+            ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP "bash -c '
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt install -y nodejs
-            EOF
+            sudo apt install -y nodejs'
+            "
 
   deploy:
     executor: node-executor
