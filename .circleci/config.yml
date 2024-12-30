@@ -17,7 +17,7 @@ jobs:
             echo "Installing dependencies on EC2 instance..."
             echo "$EC2_PRIVATE_KEY" > private_key.pem
             chmod 600 private_key.pem
-            ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP "bash -c '
+            ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$EC2_PUBLIC_IP "bash -c '
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt install -y nodejs'
             "
@@ -31,7 +31,7 @@ jobs:
           command: |
             echo "$EC2_PRIVATE_KEY" > private_key.pem
             chmod 600 private_key.pem
-            ssh -i private_key.pem ec2-user@$EC2_PUBLIC_IP 'bash -s' < ./deploy.sh
+            ssh -i private_key.pem ubuntu@$EC2_PUBLIC_IP 'bash -s' < ./deploy.sh
 
 workflows:
   version: 2
