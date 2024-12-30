@@ -13,7 +13,7 @@ NGINX_ENABLED_PATH="/etc/nginx/sites-enabled/nexus-app"
 NGINX_CONFIG="
 server {
     listen 80;
-    server_name 34.221.162.163;  # Replace with your domain or EC2 public IP
+    server_name 35.92.121.238;  # Replace with your domain or EC2 public IP
 
     location / {
         proxy_pass http://localhost:5173/nexus-app/;
