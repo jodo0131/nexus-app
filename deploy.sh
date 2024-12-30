@@ -17,7 +17,7 @@ REPO_DIR="/app"
 # Check if the directory exists. If not, clone the repository
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo "Git repository not found. Cloning..."
-  ggit clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/your-repo.git $REPO_DIR
+  ggit clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/nexus-app.git $REPO_DIR
 else
   echo "Git repository found. Pulling latest changes..."
   cd $REPO_DIR
