@@ -35,11 +35,15 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - install_dependencies
+      - install_dependencies:
+          filters:
+            branches:
+              only:
+                - main  # This ensures that the `install_dependencies` job runs only on `main`
       - deploy:
           requires:
             - install_dependencies
-    filters:
-      branches:
-        only:
-          - main  # This ensures the pipeline only runs on the `main` branch
+          filters:
+            branches:
+              only:
+                - main  # This ensures that the `deploy` job runs only on `main`
