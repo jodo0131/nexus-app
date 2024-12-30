@@ -25,4 +25,5 @@ git pull origin main
 npm install
 
 # Run the desired npm script (e.g., start the app)
-npm run start
+npm run build
+npm run dev
