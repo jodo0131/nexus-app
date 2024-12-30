@@ -27,8 +27,7 @@ jobs:
       - run:
           name: SSH into EC2 and deploy
           command: |
-            echo $GITHUB_USERNAME
-            ssh ubuntu@$EC2_PUBLIC_IP 'bash -s' < ./deploy.sh
+            ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP "export GITHUB_USERNAME=$GITHUB_USERNAME && export GITHUB_TOKEN=$GITHUB_TOKEN && bash -s" < ./deploy.sh
 
 workflows:
   version: 2
