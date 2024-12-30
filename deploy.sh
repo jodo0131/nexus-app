@@ -1,8 +1,4 @@
 #!/bin/bash
-
-# Update the package list and install necessary dependencies
-sudo apt update -y
-
 # Check if Node.js is already installed
 if ! node -v > /dev/null 2>&1; then
   # Install Node.js 20.x if not already installed
@@ -13,17 +9,17 @@ else
 fi
 
 #create folder
-mkdir /app
+sudo mkdir /app
 
 # Navigate to your project directory (adjust this path if necessary)
-cd /app
+sudo cd /app
 
 # Pull the latest code (optional, depending on your strategy)
-git pull origin main
+sudo git pull origin main
 
 # Install project dependencies
-npm install
+sudo npm install
 
 # Run the desired npm script (e.g., start the app)
-npm run build
-npm run dev
+sudo npm run build
+sudo npm run dev
