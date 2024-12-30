@@ -17,7 +17,8 @@ jobs:
             echo "Installing dependencies on EC2 instance..."
             ssh ubuntu@$EC2_PUBLIC_IP "bash -c '
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt install -y nodejs'
+            sudo apt install -y nodejs
+            sudo apt install -y nginx'
             "
 
   deploy:
@@ -28,6 +29,16 @@ jobs:
           name: SSH into EC2 and deploy
           command: |
             ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP "export GITHUB_USERNAME=$GITHUB_USERNAME && export GITHUB_TOKEN=$GITHUB_TOKEN && bash -s" < ./deploy.sh
+
+  run:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Nginx Configuration
+          command: |
+            ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP "bash -s" < ./nginx.sh
+
 
 workflows:
   version: 2
@@ -41,6 +52,15 @@ workflows:
       - deploy:
           requires:
             - install_dependencies
+          filters:
+            branches:
+              only:
+                - main  # This ensures that the `deploy` job runs only on `main`
+
+      - run:
+          requires:
+            - install_dependencies
+            - deploy
           filters:
             branches:
               only:
