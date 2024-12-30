@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  node-executor:
+    machine:
+      enabled: true  # Use CircleCI's default VM, no Docker
+
+jobs:
+  install_dependencies:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo -E bash -
+            sudo yum install -y nodejs
+            npm install
+
+  deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: SSH into EC2 and deploy
+          command: |
+            echo "$EC2_PRIVATE_KEY" > private_key.pem
+            chmod 600 private_key.pem
+            ssh -i private_key.pem ec2-user@$EC2_PUBLIC_IP 'bash -s' < ./deploy.sh
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - install_dependencies
+      - deploy:
+          requires:
+            - install_dependencies
+    filters:
+      branches:
+        only:
+          - main  # This ensures that the pipeline only runs on the main branch
