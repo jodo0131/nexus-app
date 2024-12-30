@@ -27,22 +27,8 @@ fi
 # Navigate to the project directory (if needed)
 cd $REPO_DIR/nexus-app
 
-# Define the port where your dev server is running
-PORT=5173
-
-# Check if there is already a process running on the specified port
-echo "Checking for any existing processes running on port $PORT..."
-
-# Get the PID of the process running on the port
-PID=$(lsof -t -i:$PORT)
-
-if [ -n "$PID" ]; then
-    echo "Process with PID $PID found running on port $PORT. Stopping it..."
-    # Kill the existing process
-    kill -9 $PID
-else
-    echo "No process found running on port $PORT."
-fi
+# stop running npm
+pkill -f 'npm'
 
 # Install dependencies and deploy (for example, run npm install or npm run deploy)
 echo "Installing dependencies and deploying..."
