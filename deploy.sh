@@ -5,7 +5,7 @@ if ! node -v > /dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
   sudo apt install -y nodejs
 else
-  echo "Node.js is already installed."
+  echo "Node.js is already installed.."
 fi
 
 #create folder
