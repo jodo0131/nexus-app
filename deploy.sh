@@ -29,7 +29,9 @@ cd $REPO_DIR/nexus-app
 
 # stop running npm
 sudo pkill -f 'npm'
+sudo ps aux | grep 'npm'
 sudo pkill -f 'node'
+sudo ps aux | grep 'node'
 
 # Install dependencies and deploy (for example, run npm install or npm run deploy)
 echo "Installing dependencies and deploying..."
