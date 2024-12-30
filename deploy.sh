@@ -15,7 +15,8 @@ sudo mkdir /app
 REPO_DIR="/app"
 
 # Check if the directory exists. If not, clone the repository
-
+export GITHUB_USERNAME=$GITHUB_USERNAME
+export GITHUB_TOKEN=$GITHUB_TOKEN
 echo "GitHub Username: $GITHUB_USERNAME"
 echo "GitHub Token: $GITHUB_TOKEN"
 
