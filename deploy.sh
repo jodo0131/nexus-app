@@ -14,12 +14,6 @@ sudo mkdir /app
 # Set the directory where you want to clone your repository
 REPO_DIR="/app"
 
-# Check if the directory exists. If not, clone the repository
-export GITHUB_USERNAME=$GITHUB_USERNAME
-export GITHUB_TOKEN=$GITHUB_TOKEN
-echo "GitHub Username: $GITHUB_USERNAME"
-echo "GitHub Token: $GITHUB_TOKEN"
-
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo "Git repository not found. Cloning..."
   cd $REPO_DIR
