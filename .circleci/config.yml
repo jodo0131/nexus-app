@@ -48,7 +48,7 @@ workflows:
           filters:
             branches:
               only:
-                - main  # This ensures that the `install_dependencies` job runs only on `main`
+                - main
       - deploy:
           requires:
             - install_dependencies
