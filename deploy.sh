@@ -1,4 +1,6 @@
 #!/bin/bash
+branch=$1
+
 # Check if Node.js is already installed
 if ! node -v > /dev/null 2>&1; then
   # Install Node.js 20.x if not already installed
@@ -18,11 +20,11 @@ REPO_DIR="/app/nexus-app"
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo "-----------Git repository not found. Cloning...-----------"
   cd /app
-  git clone git@github.com:jodo0131/nexus-app.git
+  git clone --branch $branch git@github.com:jodo0131/nexus-app.git
 else
   echo "-----------Git repository found. Pulling latest changes...-----------"
   cd $REPO_DIR
-  git pull origin main
+  git pull origin $branch
 fi
 
 #set ownership
