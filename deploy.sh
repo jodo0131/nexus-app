@@ -22,7 +22,7 @@ if [ ! -d "$REPO_DIR/.git" ]; then
 else
   echo "-----------Git repository found. Pulling latest changes...-----------"
   cd $REPO_DIR
-  git pull origin develop
+  git pull origin main
 fi
 
 #set ownership
