@@ -3,9 +3,9 @@
 branch=$1
 
 if [ "$branch" == "develop" ]; then
-    server_ip="44.201.238.14"
+    server="44.201.238.14"
 else
-    server_ip="18.206.89.27"
+    server="18.206.89.27"
 fi
 
 if nginx -v > /dev/null 2>&1; then
@@ -21,7 +21,7 @@ NGINX_ENABLED_PATH="/etc/nginx/sites-enabled/nexus-app"
 NGINX_CONFIG="
 server {
     listen 80;
-    server_name $server_ip;
+    server_name $server;
 
     location / {
         proxy_pass http://localhost:5173/nexus-app/;
