@@ -1,1 +1,73 @@
+version: 2.1
 
+executors:
+  node-executor:
+    machine:
+      enabled: true  # Use CircleCI's default VM, no Docker
+    working_directory: ~/repo  # Specify your working directory
+
+jobs:
+  install_dependencies:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            echo "Installing dependencies on EC2 instance..."
+            ssh ubuntu@$EC2_PUBLIC_IP_DEV "bash -c '
+            if ! node -v  &> /dev/null
+              then
+                echo "Node.js not found, installing..."
+                curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+                sudo apt install -y nodejs
+             else
+                echo "Node.js is already installed"
+            fi
+            sudo apt install -y nginx'
+            "
+
+  deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: SSH into EC2 and deploy
+          command: |
+            ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./deploy.sh
+
+  run:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Nginx Configuration
+          command: |
+            ssh -i nexus-app.pem ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./nginx.sh
+
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - install_dependencies:
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only:
+                - develop
+
+      - run:
+          requires:
+            - install_dependencies
+            - deploy
+          filters:
+            branches:
+              only:
+                - develop
