@@ -40,12 +40,14 @@ jobs:
 
   run:
     executor: node-executor
+    environment:
+      BRANCH: << pipeline.git.branch >>
     steps:
       - checkout
       - run:
           name: Nginx Configuration
           command: |
-            ssh ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./nginx.sh
+            ssh ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./nginx.sh $BRANCH
 
 
 workflows:
