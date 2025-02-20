@@ -16,8 +16,14 @@ jobs:
           command: |
             echo "Installing dependencies on EC2 instance..."
             ssh ubuntu@$EC2_PUBLIC_IP "bash -c '
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt install -y nodejs
+            if ! node -v  &> /dev/null
+              then
+                echo "Node.js not found, installing..."
+                curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+                sudo apt install -y nodejs
+             else
+                echo "Node.js is already installed"
+            fi
             sudo apt install -y nginx'
             "
 
@@ -28,7 +34,7 @@ jobs:
       - run:
           name: SSH into EC2 and deploy
           command: |
-            ssh ubuntu@$EC2_PUBLIC_IP "export GITHUB_USERNAME=$GITHUB_USERNAME && export GITHUB_TOKEN=$GITHUB_TOKEN && bash -s" < ./deploy.sh
+            ssh ubuntu@$EC2_PUBLIC_IP "bash -s" < ./deploy.sh
 
   run:
     executor: node-executor
@@ -55,7 +61,7 @@ workflows:
           filters:
             branches:
               only:
-                - main  # This ensures that the `deploy` job runs only on `main`
+                - main
 
       - run:
           requires:
@@ -64,4 +70,4 @@ workflows:
           filters:
             branches:
               only:
-                - main  # This ensures that the `deploy` job runs only on `main`
+                - main
