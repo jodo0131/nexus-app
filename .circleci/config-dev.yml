@@ -29,12 +29,14 @@ jobs:
 
   deploy:
     executor: node-executor
+    environment:
+      BRANCH: << pipeline.git.branch >>
     steps:
       - checkout
       - run:
           name: SSH into EC2 and deploy
           command: |
-            ssh ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./deploy.sh
+            ssh ubuntu@$EC2_PUBLIC_IP_DEV "bash -s" < ./deploy.sh $BRANCH
 
   run:
     executor: node-executor
