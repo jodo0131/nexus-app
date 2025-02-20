@@ -4,7 +4,7 @@ branch=$1
 
 if [ "$branch" == "develop" ]; then
     server_ip="44.201.238.14"
-else [ "$branch" == "main" ]; then
+else
     server_ip="18.206.89.27"
 fi
 
