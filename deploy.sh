@@ -5,39 +5,51 @@ if ! node -v > /dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
   sudo apt install -y nodejs
 else
-  echo "Node.js is already installed.."
+  echo "-----------Node.js is already installed..-----------"
 fi
 
 #create folder
 sudo mkdir /app
 
+
 # Set the directory where you want to clone your repository
 REPO_DIR="/app/nexus-app"
 
 if [ ! -d "$REPO_DIR/.git" ]; then
-  echo "Git repository not found. Cloning..."
+  echo "-----------Git repository not found. Cloning...-----------"
   cd /app
-  sudo git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/nexus-app.git
+  git clone git@github.com:jodo0131/nexus-app.git
 else
-  echo "Git repository found. Pulling latest changes..."
+  echo "-----------Git repository found. Pulling latest changes...-----------"
   cd $REPO_DIR
-  sudo git pull origin main
+  git pull origin develop
 fi
 
+#set ownership
+echo "-----------Changing ownership of /app-----------"
+sudo chown -R ubuntu:ubuntu /app
+
 # Navigate to the project directory (if needed)
-cd $REPO_DIR/nexus-app
+cd $REPO_DIR
+pwd
 
 # stop running npm
-sudo pkill -f 'npm'
-sudo ps aux | grep 'npm'
-sudo pkill -f 'node'
-sudo ps aux | grep 'node'
+echo "-----------Stopping current nexus-app running-----------"
+ps aux | grep 'node /app/nexus-app/node_modules/.bin/vite' | grep -v 'grep' | awk '{print $2}' | xargs -I {} kill {}
 
-# Install dependencies and deploy (for example, run npm install or npm run deploy)
-echo "Installing dependencies and deploying..."
+# Install dependencies and deploy (for example, run npm install or npm run deploy))
+echo "-----------Installing dependencies and deploying...-----------"
+pwd
 # Install project dependencies
-sudo npm install
+echo "-----------NPM Install-----------"
+npm install
 
 # Run the desired npm script (e.g., start the app)
-sudo npm run build
-sudo nohup npm run dev > /dev/null 2>&1 &
+echo "-----------NPM RUN BUILD-----------"
+npm run build
+echo "-----------NPM RUN DEV-----------"
+nohup npm run dev > /dev/null 2>&1 &
+
+#checking netstat
+echo "-----------NETSTAT-----------"
+netstat -tulpn
